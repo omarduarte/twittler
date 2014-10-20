@@ -23,18 +23,16 @@
             $tweet.appendTo($body);
             index -= 1;
           }
-          window.setTimeout(function() {
-            tweetler.getNewTweets(tweetCount);
-          },500);
+
+          $('.show-tweets').hide();
+
         },
-        getNewTweets: function(shownTweets) {
+        getNewTweets: function() {
           var totalTweets = streams.home.length;
+          var shownTweets = $('.tweet').length;
           if (totalTweets > shownTweets) {
             $(".show-tweets").show().text(totalTweets - shownTweets + " unread tweets");
           }
-          window.setTimeout(function() {
-            tweetler.getNewTweets(shownTweets);
-          }, 500);
         }
       };
 
@@ -44,6 +42,8 @@
         $('.show-tweets').on('click', function() {
           tweetler.showAllTweets();
         });
+
+        window.setInterval(tweetler.getNewTweets, 500);
 
       });
 
