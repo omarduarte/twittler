@@ -1,3 +1,7 @@
 .show-tweets {
 	display: none;
 };
+
+.tweet {
+	padding: 10px;
+}

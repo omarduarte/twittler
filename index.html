@@ -10,6 +10,23 @@
     <script>
 
       var tweetler = {
+        showAllTweets: function() {
+          var $body = $('body');
+          $body.find('.tweet').remove();     
+          var index = streams.home.length - 1;
+          var tweetCount = index + 1;
+          while(index >= 0){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            $tweet.addClass('tweet');
+            $tweet.text('@' + tweet.user + ' (' + tweet.created_at + ') '+ ': ' + tweet.message);
+            $tweet.appendTo($body);
+            index -= 1;
+          }
+          window.setTimeout(function() {
+            tweetler.getNewTweets(tweetCount);
+          },500);
+        },
         getNewTweets: function(shownTweets) {
           var totalTweets = streams.home.length;
           if (totalTweets > shownTweets) {
@@ -22,22 +39,11 @@
       };
 
       $(document).ready(function(){
-        var $body = $('body');
-        //$body.html('');
+        tweetler.showAllTweets();
 
-        var index = streams.home.length - 1;
-        var tweetCount = index + 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ' (' + tweet.created_at + ') '+ ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-
-        window.setTimeout(function() {
-          tweetler.getNewTweets(tweetCount);
-        },500);
+        $('.show-tweets').on('click', function() {
+          tweetler.showAllTweets();
+        });
 
       });
 
