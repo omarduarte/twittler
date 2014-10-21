@@ -17,17 +17,42 @@ var twittler = {
         if (data === false) {
           twittler.setUsername();
         } else {
-          twittler.username = data;
+          twittler.username = data.username;
+          $('.username').text('@' + data.username);
+          streams.users[twittler.username] = [];
           twittler.currentStream = streams.home;
           twittler.showAllTweets();
         }
       }
     });
   },
+  newTweet: function() {
+    vex.dialog.open({
+      message: 'What\'s on your mind?',
+      input: '<input name="tweet" type="text" placeholder="tweet" required />',
+      buttons: [
+        $.extend({}, vex.dialog.buttons.YES, {
+          text: 'Tweet'
+        }),
+        $.extend({}, vex.dialog.buttons.YES, {
+          text: 'Cancel'
+        })
+      ],
+      callback: function(data) {
+        if (data !== false) {
+          var tweet = {
+            user: twittler.username,
+            message: data.tweet,
+            created_at: new Date()
+          };
+          window.addTweet(tweet);
+        } 
+      }
+    });
+  },
   showAllTweets: function() {
     var $container = $('.tweets-container');
     var index = twittler.currentStream.length - 1;
-    var tweetCount = index + 1;
 
     $container.find('.tweet').remove();     
 
@@ -46,7 +71,6 @@ var twittler = {
     $('.age').age();
 
   },
-
   getNewTweets: function() {
     if (twittler.currentStream !== null) {
       var totalTweets = twittler.currentStream.length;
@@ -78,6 +102,10 @@ $(document).ready(function() {
   $('.home').on('click', function() {
     twittler.currentStream = streams.home;   
     twittler.showAllTweets();
+  });
+
+  $('.new-tweet').on('click', function() {
+    twittler.newTweet();
   });
 
   window.setInterval(twittler.getNewTweets, 1500);

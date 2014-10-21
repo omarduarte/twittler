@@ -1,9 +1,9 @@
 .show-tweets {
-	display: none !important;
-};
+	display: none;
+}
 
 .tweets-container {
-	padding-top: 30px;	
+	padding-top: 20px;	
 }
 
 .user {
