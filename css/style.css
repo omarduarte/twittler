@@ -1,5 +1,5 @@
 .show-tweets {
-	display: none;
+	display: none !important;
 };
 
 .tweets-container {
