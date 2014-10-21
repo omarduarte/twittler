@@ -46,6 +46,7 @@ var twittler = {
             created_at: new Date()
           };
           window.addTweet(tweet);
+          twittler.showAllTweets();
         } 
       }
     });
