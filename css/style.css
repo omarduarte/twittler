@@ -2,11 +2,28 @@
 	display: none;
 };
 
-.tweet {
-	padding: 10px;
-	font: 2em;
+.tweets-container {
+	padding-top: 30px;	
 }
 
-body {
-	padding: 50px;
+.user {
+	font-size: 2em;
+}
+
+.age {
+	float: right;
+	padding-top: 15px;
+}
+
+.header {
+	padding-bottom: 25px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
 }

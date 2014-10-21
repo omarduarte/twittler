@@ -4,20 +4,20 @@ var twittler = {
   currentStream: null,
 
   showAllTweets: function() {
-    var $body = $('body');
+    var $container = $('.tweets-container');
     var index = twittler.currentStream.length - 1;
     var tweetCount = index + 1;
 
-    $body.find('.tweet').remove();     
+    $container.find('.tweet').remove();     
 
     while (index >= 0) {
       var tweet = twittler.currentStream[index];
       var $tweetContainer = $('<div></div>').addClass('tweet');
       var $user = $('<a href="#"></a>').text('@' + tweet.user).addClass('user');
       var $time = $('<time></time>').attr('datetime', tweet.created_at).addClass('age');
-      var $message = $('<div></div>').text(tweet.message).addClass('message');
-      $tweetContainer.append($user,$time,$message);
-      $tweetContainer.appendTo($body);
+      var $message = $('<div></div>').text(tweet.message).addClass('message lead');
+      $tweetContainer.append($user, $time, $message);
+      $tweetContainer.appendTo($container);
       index -= 1;
     }
 
@@ -37,7 +37,7 @@ var twittler = {
 };
 
 $(document).ready(function() {
-  
+
   // Init
   twittler.currentStream = streams.home;
   twittler.showAllTweets();
@@ -46,7 +46,7 @@ $(document).ready(function() {
     twittler.showAllTweets();
   });
 
-  $('body').on('click', '.user', function() {
+  $('.tweets-container').on('click', '.user', function() {
     twittler.currentStream = streams.users[$(this).text().slice(1)];
     twittler.showAllTweets();
   });
