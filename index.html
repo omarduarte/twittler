@@ -6,20 +6,21 @@
     <script src="data_generator.js"></script>
   </head>
   <body>
-    <a href="#">Twittler - Home</a>
+    <a href="#" class="home">Twittler - Home</a>
     <div>
       <button class="show-tweets"></button>
     </div>
     <script>
 
       var twittler = {
-        showHomeTweets: function() {
+        currentStream: streams.home,
+        showAllTweets: function() {
           var $body = $('body');
           $body.find('.tweet').remove();     
-          var index = streams.home.length - 1;
+          var index = twittler.currentStream.length - 1;
           var tweetCount = index + 1;
           while (index >= 0) {
-            var tweet = streams.home[index];
+            var tweet = twittler.currentStream[index];
             var $tweetContainer = $('<div></div>').addClass('tweet');
             var $user = $('<a href="#"></a>').text('@' + tweet.user).addClass('user');
             var $time = $('<span></span>').text(tweet.created_at).addClass('time');
@@ -30,8 +31,12 @@
           }
           $('.show-tweets').hide();
         },
+        showUserTweets: function(user) {
+          var $body = $('body');
+          $body.find('.tweet').remove();   
+        },
         getNewTweets: function() {
-          var totalTweets = streams.home.length;
+          var totalTweets = twittler.currentStream.length;
           var shownTweets = $('.tweet').length;
           if (totalTweets > shownTweets) {
             $('.show-tweets').show().text(totalTweets - shownTweets + ' unread tweets');
@@ -42,10 +47,20 @@
       $(document).ready(function(){
         
         // Init
-        twittler.showHomeTweets();
+        twittler.showAllTweets();
 
         $('.show-tweets').on('click', function() {
-          twittler.showHomeTweets();
+          twittler.showAllTweets();
+        });
+
+        $('.user').on('click', function() {
+          twittler.currentStream = streams.users[$(this).text().slice(1)];
+          twittler.showAllTweets();
+        });
+
+        $('.home').on('click', function() {
+          twittler.currentStream = streams.home;   
+          twittler.showAllTweets();
         });
 
         window.setInterval(twittler.getNewTweets, 500);
