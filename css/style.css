@@ -3,7 +3,17 @@
 }
 
 .tweets-container {
-	padding-top: 20px;	
+	padding-top: 20px;
+}
+
+.tweet {
+	padding: 20px 40px 10px 40px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border-color: #ccc;
+	border-width: 1px;
+	border-style: solid;
 }
 
 .user {
@@ -17,6 +27,12 @@
 
 .header {
 	padding-bottom: 25px;
+}
+
+footer {
+	color: #333;
+	padding: 60px;
+	float: bottom;
 }
 
 @media (min-width: 768px) {
